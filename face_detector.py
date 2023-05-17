@@ -11,9 +11,16 @@ def recognize_faces(paths0, model: str = "hog") -> None:
     # cnn stands for convolutional neural network - works best in GPU
     # returns None
     for i, path in enumerate(paths0):
-        #Substring para capturar o nome do arquivo
+        # string slicer, takes an image array produced in main
+        # and iterates through it for obtaining folder name substring from path
+
         string = path
-        file_name = path[string.find("/")+1:]
+        # obtains path from current iterator
+
+        file_name = path[string.find("/") + 1:]
+        # finds / on path, gets its index adds one to it
+        # slices the string from the index to the end and stores it in file_name
+        # file_name will be used by the saving method bellow
 
         input_image = face_recognition.load_image_file(path)
         # uses face_recognition to load image into input_image
@@ -22,9 +29,11 @@ def recognize_faces(paths0, model: str = "hog") -> None:
         # locates faces in the loaded image according to the assigned model and saves it in input_face_locations
         # generates a tuple containing the coordinates for drawing each face's bounding box
 
-        # Escreve no arquivo txt o nome da imagem que está sendo processada e o total de faces detectadas
         with open("imagesSaved/faceDetector/face_detector.txt", "a") as file:
+            # opens opencv.tx with value "a" for appending
+
             file.write(file_name + "\n" + str(len(input_face_locations)) + "\n")
+            # writes current image's name and amount of detected faces
 
         pillow_image = Image.fromarray(input_image)
         # generates a PIL image for drawing bounding boxes
@@ -36,17 +45,18 @@ def recognize_faces(paths0, model: str = "hog") -> None:
             print("FACE DETECTED", bounding_box)
             # prints located bounding boxes
 
-            #Escreve os bounding box encontrados na imagem
             with open("imagesSaved/faceDetector/face_detector.txt", "a") as file:
                 file.write(str(bounding_box) + "\n")
+                # writes bounding boxes coordinates on opencv.txt
 
             _display_face(draw, bounding_box, "FACE DETECTED")
             # calls _display_face passing the draw image, bounding_box, and a label for the bounding box
 
         del draw
         # deletes current draw
-        #Salva as imagens com os bounding box desenhados
+
         save_image(file_name, pillow_image)
+        # saves processed images with bounding boxes using filename
 
 
 def _display_face(draw, bounding_box, name):
@@ -70,7 +80,10 @@ def _display_face(draw, bounding_box, name):
 
 
 def save_image(image_name, image):
-    # recebe um nome para a imagem, concatena a terminação e salva a imagem no path indicado
-    # o Path especifica o path no formato / forward slash e resolve o caminho no SO que está rodando
+    # receives an image name and an image file
+
     path = "imagesSaved/faceDetector/" + image_name
+    # uses Path lib for solving multi OS / issue on directory tree
+
     image.save(path)
+    # saves image on the informed path using pillow lib
