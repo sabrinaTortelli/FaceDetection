@@ -2,7 +2,7 @@ import cv2
 from pathlib import Path
 
 
-def detector_face(paths0):
+def recognize_faces_open_cv(paths0):
     # open-cv pre-trained face detection model
     # receives an array of images to be processed
 
@@ -10,14 +10,15 @@ def detector_face(paths0):
     # loads rules for frontal face detection from xml file into face_cascade object
 
     for i, path in enumerate(paths0):
-        # string slicer, takes an image array produced in main
-        # and iterates through it for obtaining folder name substring from path
+        print("Interation ", i)
+        # loop for image processing, takes an image array produced in main
+        # and iterates through it
 
         string = path
         # obtains path from current iterator
 
         file_name = path[string.find("/") + 1:]
-        # finds / on path, gets its index adds one to it
+        # string slicer finds / on path, gets its index adds one to it
         # slices the string from the index to the end and stores it in file_name
         # file_name will be used by the saving method bellow
 
@@ -50,8 +51,13 @@ def detector_face(paths0):
                     # writes bounding boxes coordinates on opencv.txt
                 print(str(x) + " - " + str(y))
 
+            with open("imagesSaved/openCV/opencv.txt", "a") as file:
+                file.write("\n")
+
             save_image(file_name, img)
             # saves processed images with bounding boxes using filename
+
+            print("\n")
         except:
             continue
 

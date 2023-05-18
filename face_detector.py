@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import face_recognition
 from PIL import Image, ImageDraw
 
@@ -11,14 +13,15 @@ def recognize_faces(paths0, model: str = "hog") -> None:
     # cnn stands for convolutional neural network - works best in GPU
     # returns None
     for i, path in enumerate(paths0):
-        # string slicer, takes an image array produced in main
-        # and iterates through it for obtaining folder name substring from path
+        print("Interation " + i)
+        # loop for image processing, takes an image array produced in main
+        # and iterates through it
 
         string = path
         # obtains path from current iterator
 
         file_name = path[string.find("/") + 1:]
-        # finds / on path, gets its index adds one to it
+        # string slicer finds / on path, gets its index adds one to it
         # slices the string from the index to the end and stores it in file_name
         # file_name will be used by the saving method bellow
 
@@ -51,12 +54,16 @@ def recognize_faces(paths0, model: str = "hog") -> None:
 
             _display_face(draw, bounding_box, "FACE DETECTED")
             # calls _display_face passing the draw image, bounding_box, and a label for the bounding box
+        with open("imagesSaved/faceDetector/face_detector.txt", "a") as file:
+            file.write("\n")
 
         del draw
         # deletes current draw
 
         save_image(file_name, pillow_image)
         # saves processed images with bounding boxes using filename
+
+        print("\n")
 
 
 def _display_face(draw, bounding_box, name):
@@ -82,8 +89,8 @@ def _display_face(draw, bounding_box, name):
 def save_image(image_name, image):
     # receives an image name and an image file
 
-    path = "imagesSaved/faceDetector/" + image_name
+    path = str(Path("imagesSaved/faceDetector/") / image_name)
     # uses Path lib for solving multi OS / issue on directory tree
-
+    #path = "imagesSaved/faceDetector/" + image_name
     image.save(path)
     # saves image on the informed path using pillow lib
