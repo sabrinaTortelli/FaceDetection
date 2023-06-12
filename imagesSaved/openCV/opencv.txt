@@ -2397,4 +2397,3 @@ imagesTest/naassom-azevedo-Q_Sei-TqSlc-unsplash.jpg
 (222, 3636, 108, 108)
 (2358, 4239, 130, 130)
 (2370, 4278, 133, 133)
-
