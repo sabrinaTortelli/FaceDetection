@@ -1,5 +1,6 @@
-from face_detector import recognize_faces
-from face_detector_opencv import recognize_faces_open_cv
+from face_detector_opencv import recognize_faces_open_cv_frontal
+from face_detector_opencv import recognize_faces_open_cv_default
+from face_detector_opencv import recognize_faces_open_cv_profile
 
 import os
 
@@ -18,6 +19,7 @@ if __name__ == '__main__':
         for filename in filenames:
             paths0 += [(os.path.join(dirname, filename))]
 
-    recognize_faces_open_cv(paths0)
-    #recognize_faces(paths0)
+    recognize_faces_open_cv_default(paths0)
+    recognize_faces_open_cv_profile(paths0)
+    recognize_faces_open_cv_frontal(paths0)
 
