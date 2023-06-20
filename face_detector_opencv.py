@@ -7,33 +7,37 @@ def recognize_faces_open_cv_frontal(paths0):
     # receives an array of images to be processed
 
     face_cascade = cv2.CascadeClassifier()
+    # creates CascadeClassifier object and saves it on face_cascade
 
     face_cascade.load('haarcascade_frontalface_alt2.xml')
+    # loads rules xml haarcascade_frontalface_alt2.xml into face_cascade
 
     for i, path in enumerate(paths0):
         print("Interation ", i)
-        # loop for image processing, takes an image array produced in main
-        # and iterates through it
+        # image processing loop, takes an image address formed in the
+        # main method and iterates through it
 
         string = path
         # obtains path from current iterator
 
         file_name = path[string.find("/") + 1:]
-        # string slicer finds / on path, gets its index adds one to it
+        # string slicer: finds / on path, gets its index adds one to it
         # slices the string from the index to the end and stores it in file_name
         # file_name will be used by the saving method bellow
 
         img = cv2.imread(path)
-        # creates a cv2 image from current iterator image and saves it on img
+        # creates a cv2 image from current image and saves it on img object
 
         frame_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # converts img to shades of gray and saves in gray
+        # converts img to shades of gray and saves in frame_gray
+
         frame_gray = cv2.equalizeHist(frame_gray)
+        # applies threshold for black/white to frame_gray
 
         try:
             faces = face_cascade.detectMultiScale(frame_gray, 1.04, 3)
             # faces object receives face_cascade and executes detectMultiScale taking
-            # a gray image, a scale factor specifying how much the image size is reduced
+            # frame_gray, a scale factor specifying how much the image size is reduced
             # and minNeighbors specifying how many neighbors each candidate rectangle should have to retain it
 
             with open("imagesM3Frontal/openCV/opencv.txt", "a") as file:
@@ -55,6 +59,8 @@ def recognize_faces_open_cv_frontal(paths0):
 
             with open("imagesM3Frontal/openCV/opencv.txt", "a") as file:
                 file.write("\n")
+                # writes a new image to opencv.txt for separating
+                # the analysed images' bounding boxes
 
             save_image(file_name, img, 'frontal')
             # saves processed images with bounding boxes using filename
@@ -69,12 +75,16 @@ def recognize_faces_open_cv_profile(paths0):
     # receives an array of images to be processed
 
     face_cascade = cv2.CascadeClassifier()
+    # creates CascadeClassifier object and saves it on face_cascade
+
     face_cascade.load('haarcascade_profileface.xml')
+    # loads rules xml haarcascade_profileface.xml into face_cascade
+
 
     for i, path in enumerate(paths0):
         print("Interation ", i)
-        # loop for image processing, takes an image array produced in main
-        # and iterates through it
+        # image processing loop, takes an image address formed in the
+        # main method and iterates through it
 
         string = path
         # obtains path from current iterator
@@ -88,13 +98,15 @@ def recognize_faces_open_cv_profile(paths0):
         # creates a cv2 image from current iterator image and saves it on img
 
         frame_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # converts img to shades of gray and saves in gray
+        # converts img to shades of gray and saves in frame_gray
+
         frame_gray = cv2.equalizeHist(frame_gray)
+        # applies threshold for black/white to frame_gray
 
         try:
             faces = face_cascade.detectMultiScale(frame_gray, 1.04, 3)
             # faces object receives face_cascade and executes detectMultiScale taking
-            # a gray image, a scale factor specifying how much the image size is reduced
+            # frame_gray, a scale factor specifying how much the image size is reduced
             # and minNeighbors specifying how many neighbors each candidate rectangle should have to retain it
 
             with open("imagesM3Profile/openCV/opencv.txt", "a") as file:
@@ -116,6 +128,8 @@ def recognize_faces_open_cv_profile(paths0):
 
             with open("imagesM3Profile/openCV/opencv.txt", "a") as file:
                 file.write("\n")
+                # writes a new image to opencv.txt for separating
+                # the analysed images' bounding boxes
 
             save_image(file_name, img, 'profile')
             # saves processed images with bounding boxes using filename
@@ -130,12 +144,16 @@ def recognize_faces_open_cv_default(paths0):
     # receives an array of images to be processed
 
     face_cascade = cv2.CascadeClassifier()
+    # creates CascadeClassifier object and saves it on face_cascade
+
     face_cascade.load('haarcascade_frontalface_default.xml')
+    # loads rules xml haarcascade_frontalface_default.xml into face_cascade
+
 
     for i, path in enumerate(paths0):
         print("Interation ", i)
-        # loop for image processing, takes an image array produced in main
-        # and iterates through it
+        # image processing loop, takes an image address formed in the
+        # main method and iterates through it
 
         string = path
         # obtains path from current iterator
@@ -149,13 +167,16 @@ def recognize_faces_open_cv_default(paths0):
         # creates a cv2 image from current iterator image and saves it on img
 
         frame_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # converts img to shades of gray and saves in gray
+        # converts img to shades of gray and saves in frame_gray
+
         frame_gray = cv2.equalizeHist(frame_gray)
+        # applies threshold for black/white to frame_gray
+
 
         try:
             faces = face_cascade.detectMultiScale(frame_gray, 1.04, 3)
             # faces object receives face_cascade and executes detectMultiScale taking
-            # a gray image, a scale factor specifying how much the image size is reduced
+            # frame_gray, a scale factor specifying how much the image size is reduced
             # and minNeighbors specifying how many neighbors each candidate rectangle should have to retain it
 
             with open("imagesM3Default/openCV/opencv.txt", "a") as file:
@@ -177,6 +198,8 @@ def recognize_faces_open_cv_default(paths0):
 
             with open("imagesM3Default/openCV/opencv.txt", "a") as file:
                 file.write("\n")
+                # writes a new image to opencv.txt for separating
+                # the analysed images' bounding boxes
 
             save_image(file_name, img, 'default')
             # saves processed images with bounding boxes using filename
@@ -187,14 +210,18 @@ def recognize_faces_open_cv_default(paths0):
 
 
 def save_image(image_name, image, type):
-    # receives an image name and an image file
+    # receives an image name and an image file and a type
+    # saves the processed image on its appropriated path
+    # according to the informed type
+    # uses Path lib for solving multi OS / issue on directory tree
+
     if type == 'default':
         path = str(Path("imagesM3Default/openCV/") / image_name)
     elif type == 'frontal':
         path = str(Path("imagesM3Frontal/openCV/") / image_name)
     else:
         path = str(Path("imagesM3Profile/openCV/") / image_name)
-    # uses Path lib for solving multi OS / issue on directory tree
+
 
     cv2.imwrite(path, image)
     # saves image on the informed path using cv2 lib

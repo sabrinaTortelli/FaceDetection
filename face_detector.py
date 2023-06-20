@@ -13,9 +13,7 @@ def recognize_faces(paths0, model: str = "hog") -> None:
     # cnn stands for convolutional neural network - works best in GPU
     # returns None
     for i, path in enumerate(paths0):
-
         print("Interation " + str(i))
-  
         # loop for image processing, takes an image array produced in main
         # and iterates through it
 
