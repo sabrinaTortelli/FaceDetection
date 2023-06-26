@@ -1,6 +1,8 @@
 # Projeto da disciplina Processamento de Imagens
 
-## M2 - Face Detection
+## M3 - Face Detection
+
+<p>Repositório: <a>https://github.com/sabrinaTortelli/FaceDetection</a></p>
 
 ## Rodar o projeto:
 
